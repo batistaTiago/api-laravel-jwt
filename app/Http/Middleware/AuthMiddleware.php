@@ -21,7 +21,7 @@ class AuthMiddleware
         $splits = explode(' ', $authorization); 
         if (count($splits) == 2 && strtolower($splits[0]) == 'bearer') {
             $token = $splits[1];
-            $user = User::where('token', $token)->first();
+            $user = User::where('token', Hash::make($token))->first();
             if (isset($user)) {
                 return $next($request);  
             }
